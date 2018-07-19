@@ -489,6 +489,7 @@ public class Camera1 extends CameraImpl {
                     mMediaRecorder.start();
                     mRecording = true;
                     this.mVideoCallback = callback;
+                    mEventDispatcher.dispatch(new CameraKitEvent(CameraKitEvent.TYPE_VIDEO_STARTED));
                 } else {
                     releaseMediaRecorder();
                 }
