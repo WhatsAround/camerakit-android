@@ -121,7 +121,6 @@ public class Camera1 extends CameraImpl {
 
     @Override
     void start() {
-        setFacing(mFacing);
         openCamera();
         if (mPreview.isReady()) {
             setDisplayAndDeviceOrientation();
@@ -189,6 +188,31 @@ public class Camera1 extends CameraImpl {
             }
 
             if (mFacing == facing && isCameraOpened()) {
+                stop();
+                start();
+            }
+        }
+    }
+
+    @Facing
+    public int getFacing() {
+        return mFacing;
+    }
+
+    @Override
+    void toggleCamera() {
+        synchronized (mCameraLock) {
+            int numberOfCameras = Camera.getNumberOfCameras();
+            if (numberOfCameras <= 1) {
+                return;
+            }
+
+            int nextCameraId = (mCameraId + 1) % numberOfCameras;
+            Camera.getCameraInfo(nextCameraId, mCameraInfo);
+            mCameraId = nextCameraId;
+            mFacing = new ConstantMapper.Facing().key(mCameraInfo.facing);
+
+            if (isCameraOpened()) {
                 stop();
                 start();
             }

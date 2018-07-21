@@ -341,6 +341,16 @@ public class CameraView extends CameraViewLayout {
         });
     }
 
+    public void toggleCamera() {
+        sWorkerHandler.post(new Runnable() {
+            @Override
+            public void run() {
+                mCameraImpl.toggleCamera();
+                mFacing = mCameraImpl.getFacing();
+            }
+        });
+    }
+
     public void setFlash(@Flash int flash) {
         this.mFlash = flash;
         mCameraImpl.setFlash(flash);

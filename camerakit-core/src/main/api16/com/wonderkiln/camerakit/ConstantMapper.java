@@ -16,6 +16,9 @@ public class ConstantMapper {
             this.mCameraKitConstant = cameraKitConstant;
         }
 
+        protected BaseMapper() {
+        }
+
         abstract T map();
 
     }
@@ -69,11 +72,22 @@ public class ConstantMapper {
             super(cameraKitConstant);
         }
 
+        protected Facing() {
+        }
+
         @Override
         Integer map() {
             return FACING_MODES.get(mCameraKitConstant, FACING_MODES.get(CameraKit.Constants.FACING_BACK));
         }
 
+        Integer key(int internalFace) {
+            for (int i = 0; i < FACING_MODES.size(); i++) {
+                if (FACING_MODES.get(i) == internalFace) {
+                    return i;
+                }
+            }
+            return null;
+        }
     }
 
     @TargetApi(21)
