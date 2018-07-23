@@ -342,11 +342,11 @@ public class CameraView extends CameraViewLayout {
     }
 
     public void toggleCamera() {
+        mFacing = mCameraImpl.getNextCameraFacing();
         sWorkerHandler.post(new Runnable() {
             @Override
             public void run() {
                 mCameraImpl.toggleCamera();
-                mFacing = mCameraImpl.getFacing();
             }
         });
     }

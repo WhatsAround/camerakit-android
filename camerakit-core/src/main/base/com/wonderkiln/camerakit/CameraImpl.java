@@ -24,6 +24,7 @@ abstract class CameraImpl {
 
     abstract void setFacing(@Facing int facing);
     abstract @Facing int getFacing();
+    abstract @Facing int getNextCameraFacing();
     abstract void toggleCamera();
     abstract void setFlash(@Flash int flash);
     abstract void setFocus(@Focus int focus);

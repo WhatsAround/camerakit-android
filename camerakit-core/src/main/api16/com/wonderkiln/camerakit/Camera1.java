@@ -200,6 +200,19 @@ public class Camera1 extends CameraImpl {
     }
 
     @Override
+    @Facing
+    public int getNextCameraFacing() {
+        Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
+        Camera.getCameraInfo(getNextCameraId(), cameraInfo);
+        int facing = new ConstantMapper.Facing().key(cameraInfo.facing);
+        return facing;
+    }
+
+    private int getNextCameraId(){
+        return (mCameraId + 1) % Camera.getNumberOfCameras();
+    }
+
+    @Override
     void toggleCamera() {
         synchronized (mCameraLock) {
             int numberOfCameras = Camera.getNumberOfCameras();
@@ -207,7 +220,7 @@ public class Camera1 extends CameraImpl {
                 return;
             }
 
-            int nextCameraId = (mCameraId + 1) % numberOfCameras;
+            int nextCameraId = getNextCameraId();
             Camera.getCameraInfo(nextCameraId, mCameraInfo);
             mCameraId = nextCameraId;
             mFacing = new ConstantMapper.Facing().key(mCameraInfo.facing);
