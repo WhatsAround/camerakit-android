@@ -74,6 +74,7 @@ public class CameraView extends CameraViewLayout {
     private int mVideoQuality;
     private int mJpegQuality;
     private int mVideoBitRate;
+    private int mDuration;
     private boolean mLockVideoAspectRatio;
     private boolean mCropOutput;
     private boolean mDoubleTapToToggleFacing;
@@ -119,6 +120,7 @@ public class CameraView extends CameraViewLayout {
                 mJpegQuality = a.getInteger(R.styleable.CameraView_ckJpegQuality, CameraKit.Defaults.DEFAULT_JPEG_QUALITY);
                 mCropOutput = a.getBoolean(R.styleable.CameraView_ckCropOutput, CameraKit.Defaults.DEFAULT_CROP_OUTPUT);
                 mVideoBitRate = a.getInteger(R.styleable.CameraView_ckVideoBitRate, CameraKit.Defaults.DEFAULT_VIDEO_BIT_RATE);
+                mDuration = a.getInteger(R.styleable.CameraView_ckVideoDuration, CameraKit.Defaults.DEFAULT_VIDEO_DURATION);
                 mDoubleTapToToggleFacing = a.getBoolean(R.styleable.CameraView_ckDoubleTapToToggleFacing, CameraKit.Defaults.DEFAULT_DOUBLE_TAP_TO_TOGGLE_FACING);
                 mLockVideoAspectRatio = a.getBoolean(R.styleable.CameraView_ckLockVideoAspectRatio, false);
                 mAdjustViewBounds = a.getBoolean(R.styleable.CameraView_android_adjustViewBounds, CameraKit.Defaults.DEFAULT_ADJUST_VIEW_BOUNDS);
@@ -150,6 +152,7 @@ public class CameraView extends CameraViewLayout {
         setPermissions(mPermissions);
         setVideoQuality(mVideoQuality);
         setVideoBitRate(mVideoBitRate);
+        setDuration(mDuration);
         setLockVideoAspectRatio(mLockVideoAspectRatio);
 
         if (!isInEditMode()) {
@@ -397,6 +400,11 @@ public class CameraView extends CameraViewLayout {
     public void setVideoBitRate(int videoBirRate) {
         this.mVideoBitRate = videoBirRate;
         mCameraImpl.setVideoBitRate(mVideoBitRate);
+    }
+
+    public void setDuration(int duration) {
+        this.mDuration = duration;
+        mCameraImpl.setDuration(mDuration);
     }
 
     public void setLockVideoAspectRatio(boolean lockVideoAspectRatio) {

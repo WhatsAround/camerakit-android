@@ -5,6 +5,7 @@ import android.graphics.YuvImage;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.media.MediaRecorder.OnInfoListener;
 import android.os.Build;
 import android.os.Environment;
 import android.os.Handler;
@@ -78,6 +79,7 @@ public class Camera1 extends CameraImpl {
     private Detector<TextBlock> mTextDetector;
 
     private int mVideoBitRate;
+    private int mDuration;
 
     private boolean mLockVideoAspectRatio;
 
@@ -315,6 +317,11 @@ public class Camera1 extends CameraImpl {
     @Override
     void setVideoBitRate(int videoBitRate) {
         this.mVideoBitRate = videoBitRate;
+    }
+
+    @Override
+    void setDuration(int duration) {
+        this.mDuration = duration;
     }
 
     @Override
@@ -960,10 +967,20 @@ public class Camera1 extends CameraImpl {
                 return false;
             }
 
+            if(mDuration > 0) {
+                mMediaRecorder.setMaxDuration(mDuration * 1000);
+            }
             mMediaRecorder.setOutputFile(videoFile.getPath());
             mMediaRecorder.setPreviewDisplay(mPreview.getSurface());
             mMediaRecorder.setOrientationHint(calculateCaptureRotation());
-
+            mMediaRecorder.setOnInfoListener(new OnInfoListener() {
+                @Override
+                public void onInfo(MediaRecorder mr, int what, int extra) {
+                    if (what == MediaRecorder.MEDIA_RECORDER_INFO_MAX_DURATION_REACHED) {
+                        stopVideo();
+                    }
+                }
+            });
             try {
                 mMediaRecorder.prepare();
             } catch (IllegalStateException e) {
