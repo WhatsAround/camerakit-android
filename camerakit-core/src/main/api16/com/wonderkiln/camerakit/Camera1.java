@@ -411,7 +411,12 @@ public class Camera1 extends CameraImpl {
                     if (!parameters.getSupportedFocusModes().contains(Camera.Parameters.FOCUS_MODE_AUTO)) {
                         return; //cannot autoFocus
                     }
-                    mCamera.setParameters(parameters);
+                    try {
+                        mCamera.setParameters(parameters);
+                    } catch (Exception e) {
+                        notifyErrorListener(e);
+                        return;
+                    }
                     mCamera.autoFocus(new Camera.AutoFocusCallback() {
                         @Override
                         public void onAutoFocus(boolean success, Camera camera) {
