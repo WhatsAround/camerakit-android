@@ -1,6 +1,7 @@
 package com.wonderkiln.camerakit;
 
 import android.support.annotation.NonNull;
+import android.util.Log;
 
 public class Size implements Comparable<Size> {
 
@@ -48,6 +49,20 @@ public class Size implements Comparable<Size> {
     @Override
     public int compareTo(@NonNull Size another) {
         return mWidth * mHeight - another.mWidth * another.mHeight;
+    }
+
+    public static Size parse(String size){
+        if(size != null && !size.isEmpty()){
+            try {
+                int x = size.indexOf('x');
+                String width = size.substring(0, x);
+                String height = size.substring(x + 1);
+                return new Size( Integer.parseInt(width), Integer.parseInt(height));
+            } catch (Exception e) {
+                Log.e("Size","parse exception " + e.getMessage());
+            }
+        }
+        return null;
     }
 
 }

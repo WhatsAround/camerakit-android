@@ -75,6 +75,7 @@ public class Camera1 extends CameraImpl {
 
     @VideoQuality
     private int mVideoQuality;
+    private Size mMaxCaptureSize;
 
     private Detector<TextBlock> mTextDetector;
 
@@ -319,6 +320,11 @@ public class Camera1 extends CameraImpl {
     @Override
     void setVideoQuality(int videoQuality) {
         this.mVideoQuality = videoQuality;
+    }
+
+    @Override
+    void setMaxCaptureSize(Size maxCaptureSize) {
+        this.mMaxCaptureSize = maxCaptureSize;
     }
 
     @Override
@@ -600,9 +606,16 @@ public class Camera1 extends CameraImpl {
             Size size;
             while (descendingSizes.hasNext() && mCaptureSize == null) {
                 size = descendingSizes.next();
-                if (targetRatio == null || targetRatio.matches(size)) {
-                    mCaptureSize = size;
-                    break;
+                if(mMaxCaptureSize == null){
+                    if (targetRatio == null || targetRatio.matches(size)) {
+                        mCaptureSize = size;
+                        break;
+                    }
+                } else {
+                    if (size.compareTo(mMaxCaptureSize) <= 0) {
+                        mCaptureSize = size;
+                        break;
+                    }
                 }
             }
         }

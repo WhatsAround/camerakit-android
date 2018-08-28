@@ -73,6 +73,7 @@ public class CameraView extends CameraViewLayout {
     @VideoQuality
     private int mVideoQuality;
     private int mJpegQuality;
+    private Size mMaxCaptureSize;
     private int mVideoBitRate;
     private int mDuration;
     private boolean mLockVideoAspectRatio;
@@ -118,6 +119,8 @@ public class CameraView extends CameraViewLayout {
                 mPermissions = a.getInteger(R.styleable.CameraView_ckPermissions, CameraKit.Defaults.DEFAULT_PERMISSIONS);
                 mVideoQuality = a.getInteger(R.styleable.CameraView_ckVideoQuality, CameraKit.Defaults.DEFAULT_VIDEO_QUALITY);
                 mJpegQuality = a.getInteger(R.styleable.CameraView_ckJpegQuality, CameraKit.Defaults.DEFAULT_JPEG_QUALITY);
+                String captureSize = a.getString(R.styleable.CameraView_ckMaxCaptureSize);
+                mMaxCaptureSize = Size.parse(captureSize);
                 mCropOutput = a.getBoolean(R.styleable.CameraView_ckCropOutput, CameraKit.Defaults.DEFAULT_CROP_OUTPUT);
                 mVideoBitRate = a.getInteger(R.styleable.CameraView_ckVideoBitRate, CameraKit.Defaults.DEFAULT_VIDEO_BIT_RATE);
                 mDuration = a.getInteger(R.styleable.CameraView_ckVideoDuration, CameraKit.Defaults.DEFAULT_VIDEO_DURATION);
@@ -151,6 +154,7 @@ public class CameraView extends CameraViewLayout {
         setZoom(mZoom);
         setPermissions(mPermissions);
         setVideoQuality(mVideoQuality);
+        setMaxCaptureSize(mMaxCaptureSize);
         setVideoBitRate(mVideoBitRate);
         setDuration(mDuration);
         setLockVideoAspectRatio(mLockVideoAspectRatio);
@@ -395,6 +399,11 @@ public class CameraView extends CameraViewLayout {
     public void setVideoQuality(@VideoQuality int videoQuality) {
         this.mVideoQuality = videoQuality;
         mCameraImpl.setVideoQuality(mVideoQuality);
+    }
+
+    public void setMaxCaptureSize(Size maxCaptureSize) {
+        this.mMaxCaptureSize = maxCaptureSize;
+        mCameraImpl.setMaxCaptureSize(mMaxCaptureSize);
     }
 
     public void setVideoBitRate(int videoBirRate) {

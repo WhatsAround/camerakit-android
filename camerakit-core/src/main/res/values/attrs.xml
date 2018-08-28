@@ -41,6 +41,7 @@
         </attr>
 
         <attr name="ckJpegQuality" format="integer" />
+        <attr name="ckMaxCaptureSize"  format="string"/>
 
         <attr name="ckVideoQuality" format="enum">
             <enum name="max480p" value="0" />
