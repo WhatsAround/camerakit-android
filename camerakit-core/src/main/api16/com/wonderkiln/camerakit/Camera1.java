@@ -768,7 +768,7 @@ public class Camera1 extends CameraImpl {
                 mCamera.reconnect();
                 mCamera.setPreviewDisplay(mPreview.getSurfaceHolder());
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                notifyErrorListener(e);
             }
         }
     }
