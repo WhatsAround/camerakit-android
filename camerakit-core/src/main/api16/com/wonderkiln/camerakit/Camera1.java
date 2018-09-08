@@ -75,6 +75,7 @@ public class Camera1 extends CameraImpl {
 
     @VideoQuality
     private int mVideoQuality;
+    private int mJpegQuality;
     private Size mMaxCaptureSize;
 
     private Detector<TextBlock> mTextDetector;
@@ -323,6 +324,11 @@ public class Camera1 extends CameraImpl {
     }
 
     @Override
+    void setJpegQuality(int jpegQuality) {
+        this.mJpegQuality = jpegQuality;
+    }
+
+    @Override
     void setMaxCaptureSize(Size maxCaptureSize) {
         this.mMaxCaptureSize = maxCaptureSize;
     }
@@ -533,7 +539,7 @@ public class Camera1 extends CameraImpl {
 
                             YuvImage yuvImage = new YuvImage(data, parameters.getPreviewFormat(), yuvOutputWidth, yuvOutputHeight, null);
                             ByteArrayOutputStream out = new ByteArrayOutputStream();
-                            yuvImage.compressToJpeg(new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), 100, out);
+                            yuvImage.compressToJpeg(new Rect(0, 0, yuvImage.getWidth(), yuvImage.getHeight()), mJpegQuality, out);
                             callback.imageCaptured(out.toByteArray());
                         }
                     });

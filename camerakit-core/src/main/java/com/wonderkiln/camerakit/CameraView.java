@@ -154,6 +154,7 @@ public class CameraView extends CameraViewLayout {
         setZoom(mZoom);
         setPermissions(mPermissions);
         setVideoQuality(mVideoQuality);
+        setJpegQuality(mJpegQuality);
         setMaxCaptureSize(mMaxCaptureSize);
         setVideoBitRate(mVideoBitRate);
         setDuration(mDuration);
@@ -423,6 +424,7 @@ public class CameraView extends CameraViewLayout {
 
     public void setJpegQuality(int jpegQuality) {
         this.mJpegQuality = jpegQuality;
+        mCameraImpl.setJpegQuality(jpegQuality);
     }
 
     public void setCropOutput(boolean cropOutput) {

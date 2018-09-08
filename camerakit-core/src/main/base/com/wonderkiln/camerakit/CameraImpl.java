@@ -32,6 +32,7 @@ abstract class CameraImpl {
     abstract void setTextDetector(Detector<TextBlock> detector);
 
     abstract void setVideoQuality(@VideoQuality int videoQuality);
+    abstract void setJpegQuality(int jpegQuality);
     abstract void setMaxCaptureSize(Size maxCaptureSize);
     abstract void setVideoBitRate(int videoBitRate);
     abstract void setDuration(int duration);
